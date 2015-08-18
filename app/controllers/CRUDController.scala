@@ -1,10 +1,9 @@
 package controllers
 
-import com.google.inject.Inject
 import play.api.Logger
 import play.api.libs.json.{JsError, JsSuccess, Json, Format}
 import play.api.mvc.{Action, Controller}
-import services.{CRUDService, MongoCRUDService}
+import services.CRUDService
 import play.api.libs.concurrent.Execution.Implicits._
 
 import scala.concurrent.Future
