@@ -24,7 +24,9 @@ GET           /user                   controllers.UserController.get
 GET           /farms                  controllers.FarmController.list
 GET           /farms/:id              controllers.FarmController.get(id: String)
 DELETE        /farms/:id              controllers.FarmController.delete(id: String)
-POST          /farms                  controllers.FarmController.update
+POST          /farms                  controllers.FarmController.create
+POST          /farms/:id              controllers.FarmController.update(id: String)
+
 
 # Authentification
 GET           /signOut                controllers.authentification.SignOut.signOut

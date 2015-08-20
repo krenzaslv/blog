@@ -43,4 +43,17 @@ class FarmDaoMongo @Inject()(reactiveMongoApi: ReactiveMongoApi) extends FarmDao
     collection.insert(farm)
     Future.successful(farm)
   }
+
+  override def find(id: UUID, userID: UUID): Future[Option[Farm]] = {
+    collection.
+      find(Json.obj("ownerID" -> userID.toString, "farmID" -> id.toString)).
+      one[Farm]
+  }
+
+  override def findAll(userID: UUID): Future[List[Farm]] = {
+    collection.
+      find(Json.obj("ownerID" -> userID)).
+      cursor[Farm](readPreference = ReadPreference.primary).
+      collect[List](DEFAULT_MAX)
+  }
 }

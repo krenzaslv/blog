@@ -11,7 +11,7 @@ case class Farm(
                  description: Option[String],
                  website: Option[String],
                  email: Option[String],
-                 owner: UUID,
+                 ownerID: UUID,
                  offers: Option[Seq[Offer]]
                  )
 
