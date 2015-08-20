@@ -11,4 +11,10 @@ trait UserAwareService[E] {
   def save(entity: E, userID: UUID): Future[E]
 
   def delete(id: UUID, userID: UUID): Future[WriteResult]
+
+  def find(id: UUID, userID: UUID): Future[E]
+  
+  def findAll(userID: UUID): Future[List[E]]
+
+
 }
