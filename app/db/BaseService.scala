@@ -10,7 +10,7 @@ import reactivemongo.api.commands.WriteResult
 
 import scala.concurrent.Future
 
-abstract class BaseService[E](dao: BaseDao[E]) extends Service[E] with UserAwareService[E]{
+abstract class BaseService[E](dao: BaseDao[E]) extends Service[E] with UserAwareService[E] {
 
   override def find(id: UUID): Future[Option[E]] = dao.find(id)
 
@@ -20,6 +20,13 @@ abstract class BaseService[E](dao: BaseDao[E]) extends Service[E] with UserAware
 
   //TODO: Impement
   override def delete(id: UUID, userID: UUID): Future[WriteResult] = ???
+
   //TODO: implement
   override def save(entity: E, userID: UUID): Future[E] = ???
+
+  //TODO: Impement
+  override def find(id: UUID, userID: UUID): Future[E] = ???
+
+  //TODO: Impement
+  override def findAll(userID: UUID): Future[List[E]] = ???
 }
