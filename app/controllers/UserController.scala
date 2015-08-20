@@ -1,11 +1,20 @@
 package controllers
 
 import com.google.inject.Inject
-import models.user.{UserService, User}
+import com.mohiva.play.silhouette.api.Environment
+import com.mohiva.play.silhouette.impl.authenticators.JWTAuthenticator
+import db.user.{UserService, User}
+import play.api.i18n.MessagesApi
+import play.api.libs.json.Json
 
-class UserController @Inject()(userService: UserService) extends BaseCRUDController[User](userService) {
+import scala.concurrent.Future
 
-  //Signup handles create
-  override def create = ???
+class UserController @Inject()(messagesApi: MessagesApi, env: Environment[User, JWTAuthenticator], userService: UserService) extends BaseSecureController[User](messagesApi, env, userService) {
 
+  def get = UserAwareAction.async { implicit request =>
+    request.identity match {
+      case Some(user) => Future.successful(Ok(Json.toJson(user)))
+      case None => Future.successful(BadRequest)
+    }
+  }
 }

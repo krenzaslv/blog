@@ -10,8 +10,8 @@ import com.mohiva.play.silhouette.impl.daos.{CacheAuthenticatorDAO, DelegableAut
 import com.mohiva.play.silhouette.impl.providers._
 import com.mohiva.play.silhouette.impl.repositories.DelegableAuthInfoRepository
 import com.mohiva.play.silhouette.impl.util._
-import models.password.PasswordInfoDAOMongo
-import models.user.{User, UserService}
+import db.password.PasswordInfoDAOMongo
+import db.user.{UserService, User}
 import net.ceedubs.ficus.Ficus._
 import net.ceedubs.ficus.readers.ArbitraryTypeReader._
 import net.codingwell.scalaguice.ScalaModule

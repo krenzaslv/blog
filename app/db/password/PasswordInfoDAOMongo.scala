@@ -1,4 +1,4 @@
-package models.password
+package db.password
 
 import com.google.inject.Inject
 import com.mohiva.play.silhouette.api.LoginInfo

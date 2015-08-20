@@ -1,8 +1,8 @@
-package models.user
+package db.user
 
 import com.google.inject.ImplementedBy
 import com.mohiva.play.silhouette.api.LoginInfo
-import models.BaseDao
+import db.BaseDao
 import scala.concurrent.Future
 
 @ImplementedBy(classOf[UserDaoMongo])

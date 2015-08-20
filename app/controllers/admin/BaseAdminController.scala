@@ -1,16 +1,16 @@
-package controllers
+package controllers.admin
 
 import java.util.UUID
 
-import models.BaseService
+import db.BaseService
 import play.api.Logger
-import play.api.libs.json.{Json, Format}
-import play.api.mvc.{Action, Controller}
 import play.api.libs.concurrent.Execution.Implicits._
+import play.api.libs.json.{Format, Json}
+import play.api.mvc.{Action, Controller}
 
 import scala.concurrent.Future
 
-abstract class BaseCRUDController[E: Format](service: BaseService[E]) extends Controller {
+abstract class BaseAdminController[E: Format](val service: BaseService[E]) extends Controller {
 
   def create = Action.async(parse.json) { implicit request =>
     request.body.validate[E].map { entity =>
