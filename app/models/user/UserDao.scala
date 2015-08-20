@@ -8,7 +8,7 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[UserDaoMongo])
 trait UserDao extends BaseDao[User]{
 
-  val TABLE_NAME = "users";
+  val TABLE_NAME = "users"
 
   def find(loginInfo: LoginInfo) : Future[Option[User]]
 }

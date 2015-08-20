@@ -1,6 +1,9 @@
 package controllers.authentification
 
 import com.google.inject.Inject
+import models.user.{User, UserService}
+import forms.SignUpForm._
+
 import com.mohiva.play.silhouette.api.Authenticator.Implicits._
 import com.mohiva.play.silhouette.api._
 import com.mohiva.play.silhouette.api.exceptions.ProviderException
@@ -10,18 +13,15 @@ import com.mohiva.play.silhouette.impl.authenticators.JWTAuthenticator
 import com.mohiva.play.silhouette.impl.exceptions.IdentityNotFoundException
 import com.mohiva.play.silhouette.impl.providers._
 import forms.SignInForm
-import models.user.{User, UserService}
 import net.ceedubs.ficus.Ficus._
 import play.api.Configuration
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json._
 import play.api.mvc.Action
-import SignInForm._
+
 import scala.concurrent.Future
 import scala.concurrent.duration._
-
-
 
 class SignInController @Inject()(
                                   val messagesApi: MessagesApi,
