@@ -4,23 +4,22 @@ import com.google.inject.Inject
 import com.mohiva.play.silhouette.api.LoginInfo
 import com.mohiva.play.silhouette.api.util.PasswordInfo
 import com.mohiva.play.silhouette.impl.daos.DelegableAuthInfoDAO
-import play.api.libs.json.Json
-import play.modules.reactivemongo.ReactiveMongoApi
+import scala.concurrent.Future
+import play.modules.reactivemongo._
 import play.modules.reactivemongo.json.collection.JSONCollection
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.collection.mutable
-import scala.concurrent.Future
-import play.modules.reactivemongo.json._
+import PersistentPasswordInfo._
 import play.modules.reactivemongo.json.collection._
+import play.api.libs.json._
+import json._
+
 
 class PasswordInfoDAOMongo @Inject()(reactiveMongoApi: ReactiveMongoApi) extends DelegableAuthInfoDAO[PasswordInfo] {
 
-  val TABLE_NAME: String = "PasswordInfo"
-
-  implicit val passwordInfoFormat = Json.format[PasswordInfo]
-  implicit val persistentPasswordInfoFormat = Json.format[PersistentPasswordInfo]
 
   def collection: JSONCollection = reactiveMongoApi.db.collection(TABLE_NAME)
+
+  val TABLE_NAME: String = "PasswordInfo"
 
   override def update(loginInfo: LoginInfo, authInfo: PasswordInfo): Future[PasswordInfo] = {
     Future.successful(authInfo)
@@ -38,15 +37,15 @@ class PasswordInfoDAOMongo @Inject()(reactiveMongoApi: ReactiveMongoApi) extends
   }
 
   override def find(loginInfo: LoginInfo): Future[Option[PasswordInfo]] = {
-    val passwordInfo: Future[Option[PasswordInfo]] = collection
+    val passwordInfo: Future[Option[PersistentPasswordInfo]] = collection
       .find(Json.obj("loginInfo" -> loginInfo))
-      .one[PasswordInfo]
+      .one[PersistentPasswordInfo]
 
     passwordInfo.flatMap {
       case None =>
         Future.successful(Option.empty[PasswordInfo])
-      case Some(passwordInfo) =>
-        Future(Some(passwordInfo))
+      case Some(persistentPasswordInfo) =>
+        Future(Some(persistentPasswordInfo.authInfo))
     }
   }
 
@@ -55,10 +54,3 @@ class PasswordInfoDAOMongo @Inject()(reactiveMongoApi: ReactiveMongoApi) extends
     Future.successful(authInfo)
   }
 }
-
-object PasswordInfoDAOMongo {
-
-  var data: mutable.HashMap[LoginInfo, PasswordInfo] = mutable.HashMap()
-}
-
-case class PersistentPasswordInfo(loginInfo: LoginInfo, authInfo: PasswordInfo)
