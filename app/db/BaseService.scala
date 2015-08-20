@@ -18,15 +18,4 @@ abstract class BaseService[E](dao: BaseDao[E]) extends Service[E] with UserAware
 
   override def delete(id: UUID): Future[WriteResult] = dao.delete(id)
 
-  //TODO: Impement
-  override def delete(id: UUID, userID: UUID): Future[WriteResult] = ???
-
-  //TODO: implement
-  override def save(entity: E, userID: UUID): Future[E] = ???
-
-  //TODO: Impement
-  override def find(id: UUID, userID: UUID): Future[E] = ???
-
-  //TODO: Impement
-  override def findAll(userID: UUID): Future[List[E]] = ???
 }

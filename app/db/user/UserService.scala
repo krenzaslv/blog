@@ -12,6 +12,7 @@ import scala.concurrent.Future
 
 class UserService @Inject()(userDao: UserDao) extends BaseService[User](userDao) with IdentityService[User] {
 
+  //TODO find a cleaner way
   override def save(newUser: User): Future[User] = {
     userDao.find(newUser.userID).flatMap {
       case Some(user) =>
@@ -32,4 +33,10 @@ class UserService @Inject()(userDao: UserDao) extends BaseService[User](userDao)
   }
 
   override def retrieve(loginInfo: LoginInfo): Future[Option[User]] = userDao.find(loginInfo)
+
+  override def findAllByUserId(userID: UUID): Future[List[User]] = ???
+
+  override def delete(id: UUID, userID: UUID): Future[WriteResult] = ???
+
+  override def find(id: UUID, userID: UUID): Future[Option[User]] = ???
 }
