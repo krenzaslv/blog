@@ -7,10 +7,14 @@ GET           /                    controllers.Application.index
 
 # User
 GET           /users               controllers.UserController.list
-POST          /users               controllers.UserController.create
 GET           /users/:id           controllers.UserController.get(id: String)
 DELETE        /users/:id           controllers.UserController.delete(id: String)
-POST          /users/:id           controllers.UserController.update(id: String)
+POST          /users               controllers.UserController.update
+
+# Authentification
+GET           /signOut             controllers.authentification.SignOut.signOut
+POST          /signIn              controllers.authentification.SignInController.authenticate
+POST          /signUp              controllers.authentification.SignUpController.signUp
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
