@@ -1,10 +1,11 @@
 package controllers
 
 import com.google.inject.Inject
-import models.User
-import services.UserService
-import models.JsonFormats._
+import models.user.{UserService, User}
 
-class UserController @Inject()(userService: UserService) extends CRUDController[User](userService) {
+class UserController @Inject()(userService: UserService) extends BaseCRUDController[User](userService) {
+
+  //Signup handles create
+  override def create = ???
 
 }

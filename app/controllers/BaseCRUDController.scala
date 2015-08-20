@@ -1,18 +1,20 @@
 package controllers
 
+import java.util.UUID
+
+import models.BaseService
 import play.api.Logger
-import play.api.libs.json.{JsError, JsSuccess, Json, Format}
+import play.api.libs.json.{Json, Format}
 import play.api.mvc.{Action, Controller}
-import services.CRUDService
 import play.api.libs.concurrent.Execution.Implicits._
 
 import scala.concurrent.Future
 
-abstract class CRUDController[E: Format](service: CRUDService[E]) extends Controller {
+abstract class BaseCRUDController[E: Format](service: BaseService[E]) extends Controller {
 
   def create = Action.async(parse.json) { implicit request =>
     request.body.validate[E].map { entity =>
-      service.create(entity).map { lastError =>
+      service.save(entity).map { lastError =>
         Logger.debug(s"Successfully inserted with LastError: $lastError")
         Created
       }
@@ -20,13 +22,13 @@ abstract class CRUDController[E: Format](service: CRUDService[E]) extends Contro
   }
 
   def list = Action.async {
-    service.findAll.map { entityList =>
-      Ok(Json.toJson(entityList))
+    service.findAll.flatMap { entityList =>
+      Future.successful(Ok(Json.toJson(entityList)))
     }
   }
 
   def get(id: String) = Action.async {
-    service.findById(id).map(
+    service.find(UUID.fromString(id)).map(
       _.fold(
         NotFound(s"Entity #$id not found")
       )(entity =>
@@ -35,15 +37,15 @@ abstract class CRUDController[E: Format](service: CRUDService[E]) extends Contro
   }
 
   def delete(id: String) = Action.async {
-    service.delete(id).map {
-      case JsSuccess(_, _) => Ok
-      case JsError(_) => BadRequest
+    service.delete(UUID.fromString(id)).map {
+      case result if result.ok => Ok
+      case result => BadRequest
     }
   }
 
-  def update(id: String) = Action.async(parse.json) { implicit request =>
+  def update = Action.async(parse.json) { implicit request =>
     request.body.validate[E].map { entity =>
-      service.update(id, entity).map { lastError =>
+      service.save(entity).map { lastError =>
         Logger.debug(s"Successfully inserted with LastError: $lastError")
         Ok(Json.toJson(entity))
       }
