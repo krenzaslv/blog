@@ -1,4 +1,4 @@
-package models.user
+package db.user
 
 import java.util.UUID
 
@@ -9,8 +9,7 @@ case class User(
                  loginInfo: LoginInfo,
                  firstName: Option[String],
                  lastName: Option[String],
-                 email: Option[String]
-                 ) extends Identity
+                 email: Option[String]) extends Identity
 
 object User {
 

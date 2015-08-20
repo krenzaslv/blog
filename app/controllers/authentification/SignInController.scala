@@ -1,7 +1,7 @@
 package controllers.authentification
 
 import com.google.inject.Inject
-import models.user.{User, UserService}
+import db.user.{UserService, User}
 import forms.SignUpForm._
 
 import com.mohiva.play.silhouette.api.Authenticator.Implicits._
@@ -23,15 +23,7 @@ import play.api.mvc.Action
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-class SignInController @Inject()(
-                                  val messagesApi: MessagesApi,
-                                  val env: Environment[User, JWTAuthenticator],
-                                  userService: UserService,
-                                  authInfoRepository: AuthInfoRepository,
-                                  credentialsProvider: CredentialsProvider,
-                                  configuration: Configuration,
-                                  clock: Clock)
-  extends Silhouette[User, JWTAuthenticator] {
+class SignInController @Inject()(val messagesApi: MessagesApi, val env: Environment[User, JWTAuthenticator], userService: UserService, authInfoRepository: AuthInfoRepository, credentialsProvider: CredentialsProvider, configuration: Configuration, clock: Clock) extends Silhouette[User, JWTAuthenticator] {
 
   def authenticate = Action.async(parse.json) { implicit request =>
     request.body.validate[SignInForm].map { data =>

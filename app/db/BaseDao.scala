@@ -1,4 +1,4 @@
-package models
+package db
 
 import java.util.UUID
 
@@ -10,7 +10,7 @@ import scala.concurrent.Future
 //TODO: JSON coast to coast
 trait BaseDao[E] {
 
-  val TABLE_NAME : String
+  val TABLE_NAME: String
 
   val DEFAULT_MAX = 100
 

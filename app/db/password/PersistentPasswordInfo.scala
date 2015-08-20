@@ -1,4 +1,4 @@
-package models.password
+package db.password
 
 import com.mohiva.play.silhouette.api.LoginInfo
 import com.mohiva.play.silhouette.api.util.PasswordInfo
