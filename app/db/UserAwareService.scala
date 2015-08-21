@@ -8,10 +8,9 @@ import scala.concurrent.Future
 
 trait UserAwareService[E] {
 
-  def delete(id: UUID, userID: UUID): Future[WriteResult]
+  def saveById(id: UUID, entity: E): Future[E]
 
-  def find(id: UUID, userID: UUID): Future[Option[E]]
+  def deleteById(id: UUID, entityID: UUID): Future[WriteResult]
 
-  def findAllByUserId(userID: UUID): Future[List[E]]
-
+  def findById(id: UUID): Future[List[E]]
 }

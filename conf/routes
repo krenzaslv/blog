@@ -22,11 +22,16 @@ GET           /user                   controllers.UserController.get
 
 # Farms
 GET           /farms                  controllers.FarmController.list
+POST          /farms                  controllers.FarmController.create
 GET           /farms/:id              controllers.FarmController.get(id: String)
 DELETE        /farms/:id              controllers.FarmController.delete(id: String)
-POST          /farms                  controllers.FarmController.create
 POST          /farms/:id              controllers.FarmController.update(id: String)
 
+# Offer
+GET           /offers                 controllers.OfferController.list
+GET           /offers/:id             controllers.OfferController.get(id : String)
+POST          /offers/:id             controllers.OfferController.create(id: String)
+DELETE        /offers/:id             controllers.OfferController.delete(id: String)
 
 # Authentification
 GET           /signOut                controllers.authentification.SignOut.signOut

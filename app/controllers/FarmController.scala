@@ -7,47 +7,21 @@ import com.mohiva.play.silhouette.api.{Silhouette, Environment}
 import com.mohiva.play.silhouette.impl.authenticators.JWTAuthenticator
 import db.farm.{FarmService, Farm}
 import db.user.User
-import forms.FarmForm
-import play.api.Logger
+import formats.json.FarmForm
 import play.api.i18n.MessagesApi
-import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.Future
-
+import play.api.libs.json.Json
+import FarmForm._
 
 class FarmController @Inject()(val messagesApi: MessagesApi, val env: Environment[User, JWTAuthenticator], val farmService: FarmService) extends Silhouette[User, JWTAuthenticator] {
-
-  def create = UserAwareAction.async(parse.json) { implicit request =>
-    request.identity match {
-      case Some(user) =>
-        request.body.validate[FarmForm].map { farmForm =>
-          //TODO make this cleaner
-          val newFarm = Farm(new UUID(0L, 0L), farmForm.name, farmForm.description, farmForm.website, farmForm.email, user.userID, farmForm.offers)
-          farmService.save(newFarm).map { lastError =>
-            Logger.debug(s"Successfully inserted with LastError: $lastError")
-            Created
-          }
-        }.getOrElse(Future.successful(BadRequest("invalid json")))
-      case None => Future.successful(Unauthorized)
-    }
-  }
 
   def list = Action.async {
     farmService.findAll.flatMap { entityList =>
       Future.successful(Ok(Json.toJson(entityList)))
     }
   }
-
-  def findAllByUserId = UserAwareAction.async(parse.json) { implicit request =>
-    request.identity match {
-      case Some(user) =>
-        farmService.find(user.userID).flatMap { entityList =>
-          Future.successful(Ok(Json.toJson(entityList)))
-        }
-    }
-  }
-
 
   def get(id: String) = Action.async {
     farmService.find(UUID.fromString(id)).map(
@@ -58,10 +32,33 @@ class FarmController @Inject()(val messagesApi: MessagesApi, val env: Environmen
     )
   }
 
+  def create = UserAwareAction.async(parse.json) { implicit request =>
+    request.identity match {
+      case Some(user) =>
+        request.body.validate[FarmForm].map { farmForm =>
+          //TODO make this cleaner evt transformers for formats
+          val newFarm = Farm(UUID.randomUUID(), farmForm.name, farmForm.description, farmForm.website, farmForm.email, user.userID, None)
+          farmService.save(newFarm).map { farm =>
+            Created(Json.toJson(farm))
+          }
+        }.getOrElse(Future.successful(BadRequest("invalid json")))
+      case None => Future.successful(Unauthorized)
+    }
+  }
+
+  def findByUserId = UserAwareAction.async(parse.json) { implicit request =>
+    request.identity match {
+      case Some(user) =>
+        farmService.find(user.userID).flatMap { entityList =>
+          Future.successful(Ok(Json.toJson(entityList)))
+        }
+    }
+  }
+
   def delete(id: String) = UserAwareAction.async(parse.json) { implicit request =>
     request.identity match {
       case Some(user) =>
-        farmService.delete(UUID.fromString(id), user.userID).map {
+        farmService.deleteById(user.userID, UUID.fromString(id)).map {
           case result if result.ok => Ok
           case result => BadRequest
         }
@@ -73,10 +70,9 @@ class FarmController @Inject()(val messagesApi: MessagesApi, val env: Environmen
     request.identity match {
       case Some(user) =>
         request.body.validate[FarmForm].map { farmForm =>
-          val newFarm = Farm(UUID.fromString(id), farmForm.name, farmForm.description, farmForm.website, farmForm.email, user.userID, farmForm.offers)
-          farmService.save(newFarm).map { lastError =>
-            Logger.debug(s"Successfully inserted with LastError: $lastError")
-            Ok(Json.toJson(newFarm))
+          val farm = Farm(UUID.fromString(id), farmForm.name, farmForm.description, farmForm.website, farmForm.email, user.userID, farmForm.offers)
+          farmService.save(farm).map { createdfarm =>
+            Ok(Json.toJson(createdfarm))
           }
         }.getOrElse(Future.successful(BadRequest("invalid json")))
       case None => Future.successful(Unauthorized)

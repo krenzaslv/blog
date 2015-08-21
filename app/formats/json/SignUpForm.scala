@@ -1,4 +1,4 @@
-package forms
+package formats.json
 
 case class SignUpForm(
                        firstName: String,

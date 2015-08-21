@@ -2,27 +2,23 @@ package db.farm
 
 import java.util.UUID
 
-import play.api.libs.json.Json
+import db.offer.Offer
+import Offer._
 
 //TODO: validate with forms
 case class Farm(
-                 farmID: UUID = UUID.randomUUID(),
+                 farmID: UUID,
                  name: String,
                  description: Option[String],
                  website: Option[String],
                  email: Option[String],
                  ownerID: UUID,
-                 offers: Option[Seq[Offer]]
+                 offers: Option[List[Offer]]
                  )
-
-case class Offer(
-                  name: String,
-                  description: Option[String],
-                  price: Double
-                  )
 
 object Farm {
 
-  implicit val offerWrites = Json.format[Offer]
-  implicit val farmWrites = Json.format[Farm]
+  import play.api.libs.json._
+
+  implicit val farmFormat = Json.format[Farm]
 }
