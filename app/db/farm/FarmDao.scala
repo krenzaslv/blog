@@ -4,6 +4,8 @@ import java.util.UUID
 
 import com.google.inject.ImplementedBy
 import db.BaseDao
+import db.offer.Offer
+import reactivemongo.api.commands.WriteResult
 
 import scala.concurrent.Future
 
@@ -12,7 +14,9 @@ trait FarmDao extends BaseDao[Farm] {
 
   val TABLE_NAME = "farms"
 
-  def find(id: UUID, userID: UUID): Future[Option[Farm]]
+  def findByOfferId(offerID: UUID): Future[Option[Farm]]
 
-  def findAll(userID: UUID): Future[List[Farm]]
+  def findByUserId(offerID: UUID): Future[List[Farm]]
+
+  def addOffer(farmId: UUID, offer: Offer): Future[Offer]
 }

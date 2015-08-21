@@ -1,4 +1,4 @@
-package forms
+package formats.json
 
 import play.api.libs.json.Json
 

@@ -2,7 +2,8 @@ package controllers.authentification
 
 import com.google.inject.Inject
 import db.user.{UserService, User}
-import forms.SignUpForm._
+import formats.json.{SignUpForm, SignInForm}
+import SignUpForm._
 
 import com.mohiva.play.silhouette.api.Authenticator.Implicits._
 import com.mohiva.play.silhouette.api._
@@ -12,7 +13,7 @@ import com.mohiva.play.silhouette.api.util.{Clock, Credentials}
 import com.mohiva.play.silhouette.impl.authenticators.JWTAuthenticator
 import com.mohiva.play.silhouette.impl.exceptions.IdentityNotFoundException
 import com.mohiva.play.silhouette.impl.providers._
-import forms.SignInForm
+import formats.json.SignInForm
 import net.ceedubs.ficus.Ficus._
 import play.api.Configuration
 import play.api.i18n.{Messages, MessagesApi}

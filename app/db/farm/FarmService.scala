@@ -3,6 +3,7 @@ package db.farm
 import java.util.UUID
 
 import com.google.inject.Inject
+import db.offer.Offer
 import db.{UserAwareService, BaseService}
 import reactivemongo.api.commands.WriteResult
 import play.api.libs.concurrent.Execution.Implicits._
@@ -35,13 +36,17 @@ class FarmService @Inject()(farmDao: FarmDao) extends BaseService[Farm](farmDao)
     }
   }
 
-  override def delete(farmID: UUID, userID: UUID): Future[WriteResult] = {
+  override def deleteById(userID: UUID, farmID: UUID): Future[WriteResult] = {
     farmDao.find(farmID).flatMap {
       case Some(farm) if farm.ownerID == userID => farmDao.delete(farmID)
     }
   }
 
-  override def find(id: UUID, userID: UUID): Future[Option[Farm]] = farmDao.find(id, userID)
+  def addOffer(farmId: UUID, offer: Offer): Future[Offer] = farmDao.addOffer(farmId, offer)
 
-  override def findAllByUserId(userID: UUID): Future[List[Farm]] = farmDao.findAll(userID)
+  override def findById(userID: UUID): Future[List[Farm]] = farmDao.findByUserId(userID)
+
+  def findByOfferId(offerID: UUID): Future[Option[Farm]] = farmDao.findByOfferId(offerID)
+
+  override def saveById(id: UUID, entity: Farm): Future[Farm] = ???
 }

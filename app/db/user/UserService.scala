@@ -7,7 +7,6 @@ import com.mohiva.play.silhouette.api.LoginInfo
 import com.mohiva.play.silhouette.api.services.IdentityService
 import db.BaseService
 import play.api.libs.concurrent.Execution.Implicits._
-import reactivemongo.api.commands.WriteResult
 import scala.concurrent.Future
 
 class UserService @Inject()(userDao: UserDao) extends BaseService[User](userDao) with IdentityService[User] {
@@ -33,10 +32,4 @@ class UserService @Inject()(userDao: UserDao) extends BaseService[User](userDao)
   }
 
   override def retrieve(loginInfo: LoginInfo): Future[Option[User]] = userDao.find(loginInfo)
-
-  override def findAllByUserId(userID: UUID): Future[List[User]] = ???
-
-  override def delete(id: UUID, userID: UUID): Future[WriteResult] = ???
-
-  override def find(id: UUID, userID: UUID): Future[Option[User]] = ???
 }
