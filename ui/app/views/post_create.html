@@ -1,0 +1,10 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<div class="form-group">
+  <form ng-submit="cpc.createPost()" novalidate class="simple-form">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" placeholder="Title" ng-model="cpc.post.title" id="title" name="title">
+
+    <text-angular ng-model="cpc.post.content"></text-angular>
+    <input type="submit" value="Submit Form">
+  </form>
+</div>

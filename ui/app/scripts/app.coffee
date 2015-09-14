@@ -22,7 +22,7 @@ angular
 ]
 .config ($routeProvider) ->
   $routeProvider
-  .when '/',
+  .when '/index',
     templateUrl: 'views/main.html'
     controller: 'MainCtrl'
     controllerAs: 'main'
@@ -30,10 +30,14 @@ angular
     templateUrl: 'views/about.html'
     controller: 'AboutCtrl'
     controllerAs: 'about'
-  .when '/post',
+  .when '/',
     templateUrl: 'views/post.html'
     controller: 'PostCtrl'
-    controllerAs: 'post'
+    controllerAs: 'pc'
+  .when '/post/create',
+    templateUrl: 'views/post_create.html'
+    controller: 'CreatepostCtrl'
+    controllerAs: 'cpc'
   .otherwise
       redirectTo: '/'
 
