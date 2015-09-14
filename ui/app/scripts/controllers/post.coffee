@@ -7,11 +7,26 @@
  # # PostCtrl
  # Controller of the uiApp
 ###
+
+class PostCtrl
+
+  constructor: (@$log, @PostService) ->
+    @$log.debug "constructing PostController"
+    @posts = []
+    @getAllPosts()
+
+  getAllPosts: () ->
+    @$log.debug "getAllPosts()"
+
+    @PostService.listPosts()
+    .then(
+      (data) =>
+        @$log.debug "Promise returned #{data.length} Posts"
+        @posts = data
+    ,
+      (error) =>
+        @$log.error "Unable to get Posts: #{error}"
+    )
+
 angular.module 'uiApp'
-  .controller 'PostCtrl', ->
-    @awesomeThings = [
-      'HTML5 Boilerplate'
-      'AngularJS'
-      'Karma'
-    ]
-    return
+.controller 'PostCtrl', PostCtrl
