@@ -1,21 +1,23 @@
 package db
 
-import java.util.UUID
 
-import com.google.inject.Inject
-import com.mohiva.play.silhouette.api.LoginInfo
-import com.mohiva.play.silhouette.api.services.IdentityService
-import db.user.{UserDao, User}
 import reactivemongo.api.commands.WriteResult
-
+import reactivemongo.bson.BSONObjectID
+import reactivemongo.extensions.json.dao.JsonDao
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-abstract class BaseService[E](dao: BaseDao[E]) extends Service[E]{
+abstract class BaseService[Model](dao: JsonDao[Model, BSONObjectID]) extends Service[Model] {
 
-  override def find(id: UUID): Future[Option[E]] = dao.find(id)
+  def save(entity: Model) = {
+    dao.insert(entity)
+  }
 
-  override def findAll: Future[List[E]] = dao.findAll
+  override def find(id: BSONObjectID): Future[Option[Model]] = dao.findById(id)
 
-  override def delete(id: UUID): Future[WriteResult] = dao.delete(id)
+  override def findAll: Future[List[Model]] = dao.findAll()
 
+  override def delete(id: BSONObjectID): Future[WriteResult] = dao.removeById(id)
+
+  def update(id: BSONObjectID, entity: Model) = ???
 }

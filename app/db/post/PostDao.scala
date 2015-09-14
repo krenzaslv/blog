@@ -1,9 +1,11 @@
-package db.user
+package db.post
 
 import db.MongoContext
 import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.json.dao.JsonDao
 import scala.concurrent.ExecutionContext.Implicits.global
-import play.modules.reactivemongo.json._
+import Post._
+import play.modules.reactivemongo.json.BSONFormats._
 
-object UserDao extends JsonDao[User, BSONObjectID] (MongoContext.db, "user")
+
+object PostDao extends JsonDao[Post, BSONObjectID] (MongoContext.db, "post")

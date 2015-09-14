@@ -1,7 +1,5 @@
 package controllers.authentification
 
-import java.util.UUID
-
 import com.google.inject.Inject
 import com.mohiva.play.silhouette.api._
 import com.mohiva.play.silhouette.api.repositories.AuthInfoRepository
@@ -20,7 +18,7 @@ import scala.concurrent.Future
 class SignUpController @Inject()(implicit val env: Environment[User, JWTAuthenticator], val messagesApi: MessagesApi, val userService: UserService, val authInfoRepository: AuthInfoRepository, val passwordHasher: PasswordHasher) extends Silhouette[User, JWTAuthenticator] {
 
   def signUp = Action.async(parse.json) { implicit request =>
-    request.body.validate[SignUpForm].map { data =>
+    /*   request.body.validate[SignUpForm].map { data =>
       val loginInfo = LoginInfo(CredentialsProvider.ID, data.email)
       userService.retrieve(loginInfo).flatMap {
 
@@ -29,7 +27,6 @@ class SignUpController @Inject()(implicit val env: Environment[User, JWTAuthenti
         case None =>
           val authInfo = passwordHasher.hash(data.password)
           val user = User(
-            userID = UUID.randomUUID(),
             loginInfo = loginInfo,
             firstName = Some(data.firstName),
             lastName = Some(data.lastName),
@@ -50,5 +47,7 @@ class SignUpController @Inject()(implicit val env: Environment[User, JWTAuthenti
       case error =>
         Future.successful(Unauthorized(Json.obj("message" -> Messages("invalid.data"))))
     }
+  } */
+    Future.successful(Unauthorized(Json.obj("message" -> Messages("invalid.data"))))
   }
 }
