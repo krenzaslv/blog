@@ -1,11 +1,11 @@
 package db.user
 
-import java.util.UUID
-
 import com.mohiva.play.silhouette.api.{LoginInfo, Identity}
+import reactivemongo.bson.BSONObjectID
+import play.modules.reactivemongo.json.BSONFormats._
 
 case class User(
-                 userID: UUID,
+                 _id: BSONObjectID = BSONObjectID.generate,
                  loginInfo: LoginInfo,
                  firstName: Option[String],
                  lastName: Option[String],
@@ -15,6 +15,6 @@ object User {
 
   import play.api.libs.json._
 
-  implicit val jsonFormat = Json.format[User]
+  implicit val userFormat = Json.format[User]
 }
 

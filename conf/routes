@@ -1,6 +1,10 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
+# Yeoman stuff
+GET           /ui                     com.tuplejump.playYeoman.Yeoman.index
+
+->            /ui/                    yeoman.Routes
 
 # Home page
 GET           /                       controllers.Application.index
@@ -11,27 +15,14 @@ GET           /admin/users/:id        controllers.admin.UserAdminController.get(
 DELETE        /admin/users/:id        controllers.admin.UserAdminController.delete(id: String)
 POST          /admin/users            controllers.admin.UserAdminController.update
 
-# Farm Admin
-GET           /admin/farm             controllers.admin.FarmAdminController.list
-GET           /admin/farm/:id         controllers.admin.FarmAdminController.get(id: String)
-DELETE        /admin/farm/:id         controllers.admin.FarmAdminController.delete(id: String)
-POST          /admin/farm             controllers.admin.FarmAdminController.update
+# Post
+GET           /post                   controllers.web.PostController.list
+POST          /post                   controllers.web.PostController.create
+GET           /post/:id               controllers.web.PostController.get(id: String)
+DELETE        /post/:id               controllers.web.PostController.delete(id: String)
 
 # User
-GET           /user                   controllers.UserController.get
-
-# Farms
-GET           /farms                  controllers.FarmController.list
-POST          /farms                  controllers.FarmController.create
-GET           /farms/:id              controllers.FarmController.get(id: String)
-DELETE        /farms/:id              controllers.FarmController.delete(id: String)
-POST          /farms/:id              controllers.FarmController.update(id: String)
-
-# Offer
-GET           /offers                 controllers.OfferController.list
-GET           /offers/:id             controllers.OfferController.get(id : String)
-POST          /offers/:id             controllers.OfferController.create(id: String)
-DELETE        /offers/:id             controllers.OfferController.delete(id: String)
+GET           /user                   controllers.web.UserController.get
 
 # Authentification
 GET           /signOut                controllers.authentification.SignOut.signOut
