@@ -24,6 +24,11 @@ DELETE        /post/:id               controllers.web.PostController.delete(id: 
 # User
 GET           /user                   controllers.web.UserController.get
 
+# Picture
+POST          /picture                controllers.admin.PictureController.upload
+GET           /picture/:id             controllers.admin.PictureController.get(id: String)
+GET           /picture/get/:id             controllers.admin.PictureController.get(id: String)
+
 # Authentification
 GET           /signOut                controllers.authentification.SignOut.signOut
 POST          /signIn                 controllers.authentification.SignInController.authenticate

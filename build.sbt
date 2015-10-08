@@ -1,6 +1,6 @@
 import com.tuplejump.sbt.yeoman.Yeoman
 
-name := """noFoodWaste"""
+name := """blog"""
 
 version := "1.0-SNAPSHOT"
 
@@ -17,6 +17,7 @@ libraryDependencies ++= Seq(
   "com.mohiva" %% "play-silhouette" % "3.0.0",
   "net.ceedubs" %% "ficus" % "1.1.2",
   "net.codingwell" %% "scala-guice" % "4.0.0",
+   "com.sksamuel.scrimage" %% "scrimage-core" % "2.1.0",
   "com.mohiva" %% "play-silhouette-testkit" % "3.0.0" % "test",
   "org.scalatest" %% "scalatest" % "2.2.1" % "test",
   "org.scalatestplus" %% "play" % "1.4.0-M3" % "test",
