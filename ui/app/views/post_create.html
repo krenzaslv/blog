@@ -8,3 +8,14 @@
     <input type="submit" value="Submit Form">
   </form>
 </div>
+
+<script src="/ui/bower_components/ngUpload/ng-upload.js"></script>
+
+<div ng-app="uiApp">
+  <div ng-controller="UploadpictureCtrl">
+    <form action="/picture" ng-upload="uploadComplete(content)" method="post">
+      <input type="file" name="file" />
+      <input type="submit" value="Upload" ng-disabled="$isUploading" />
+    </form>
+  </div>
+</div>

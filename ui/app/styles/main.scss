@@ -13,6 +13,10 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   margin:20px 0;
 }
 
+.banel-body {
+  background-color: white;
+}
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -22,6 +26,23 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 body {
   padding: 0;
+  background-color: #EEE;
+}
+
+.navbar-default {
+  background-color: black;
+  border: none!important;
+  a {
+    color: ghostwhite!important;
+  }
+}
+
+.header-image {
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+  height: 600px;
+  margin: 0;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -32,11 +53,13 @@ body {
   padding-right: 15px;
 }
 
+.post {
+  border: 1px solid #e5e5e5;
+  margin: 5px;
+}
+
 /* Custom page header */
 .header {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
-
   /* Make the masthead heading the same height as the navigation */
   h3 {
     margin-top: 0;
@@ -44,6 +67,14 @@ body {
     line-height: 40px;
     padding-bottom: 19px;
   }
+}
+
+.navbar .container{
+  margin-top: 0;
+}
+
+.navbar {
+  margin-bottom: 0;
 }
 
 /* Custom page footer */
@@ -59,13 +90,7 @@ body {
 
 /* Main marketing message and sign up button */
 .jumbotron {
-  text-align: center;
   border-bottom: 1px solid #e5e5e5;
-
-  .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-  }
 }
 
 /* Supporting marketing content */
@@ -80,7 +105,8 @@ body {
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
-    max-width: 730px;
+    max-width: 900px;
+    margin-top: 30px;
   }
 
   /* Remove the padding we set earlier */
@@ -89,10 +115,6 @@ body {
   .footer {
     padding-left: 0;
     padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
   }
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {

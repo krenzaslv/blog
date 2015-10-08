@@ -18,7 +18,8 @@ angular
   'ngRoute',
   'ngSanitize',
   'ngTouch',
-  'textAngular'
+  'textAngular',
+  'ngUpload'
 ]
 .config ($routeProvider) ->
   $routeProvider
@@ -38,6 +39,10 @@ angular
     templateUrl: 'views/post_create.html'
     controller: 'CreatepostCtrl'
     controllerAs: 'cpc'
+  .when '/Picture',
+    templateUrl: 'views/picture.html'
+    controller: 'PictureCtrl'
+    controllerAs: 'Picture'
   .otherwise
       redirectTo: '/'
 

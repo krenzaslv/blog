@@ -28,6 +28,7 @@ module.exports = (config) ->
       'bower_components/angular-sanitize/angular-sanitize.js'
       'bower_components/angular-touch/angular-touch.js'
       'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js'
+      'bower_components/ngUpload/ng-upload.js'
       'bower_components/rangy/rangy-core.js'
       'bower_components/rangy/rangy-classapplier.js'
       'bower_components/rangy/rangy-highlighter.js'
