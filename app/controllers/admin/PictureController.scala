@@ -1,7 +1,5 @@
 package controllers.admin
 
-import java.net.{URL, URI}
-
 import com.google.inject.Inject
 import com.sksamuel.scrimage.Image
 import com.sksamuel.scrimage.nio.JpegWriter
