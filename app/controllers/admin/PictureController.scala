@@ -1,5 +1,7 @@
 package controllers.admin
 
+import java.net.{URL, URI}
+
 import com.google.inject.Inject
 import com.sksamuel.scrimage.Image
 import com.sksamuel.scrimage.nio.JpegWriter
@@ -40,9 +42,11 @@ class PictureController @Inject()(val reactiveMongoApi: ReactiveMongoApi) extend
     serve[JsString, JSONReadFile](gridFS)(image)
   }
 
-  def getAllIDs = Action.async { request =>
+  def getAllPictureUrls = Action.async { request =>
     gridFS.find[JsObject, JSONReadFile](Json.obj()).collect[List]().map { files =>
-      Ok(toJson(files.map(_.id)))
+      val ids = files.map(_.id.value)
+      val urls = ids.map(routes.PictureController.get(_).url)
+      Ok(toJson(urls))
     }
   }
 }

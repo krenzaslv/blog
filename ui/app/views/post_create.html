@@ -14,8 +14,14 @@
 <div ng-app="uiApp">
   <div ng-controller="UploadpictureCtrl">
     <form action="/picture" ng-upload="uploadComplete(content)" method="post">
-      <input type="file" name="file" />
-      <input type="submit" value="Upload" ng-disabled="$isUploading" />
+      <input type="file" name="file"/>
+      <input type="submit" value="Upload" ng-disabled="$isUploading"/>
     </form>
+  </div>
+
+  <div ng-controller="GetpictureCtrl as gpc">
+    <div class="col-md-5 post" ng-repeat="pictureUrl in gpc.pictureUrls">
+      <img ng-src="{{pictureUrl}}" />
+    </div>
   </div>
 </div>
