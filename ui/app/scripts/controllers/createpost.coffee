@@ -6,7 +6,6 @@ class CreatePostCtrl
     @$log.debug "constructing CreateUserController"
     @post= {}
 
-
   createPost: () ->
     @$log.debug "createPost() #{angular.toJson(@post, true)}"
     @PostService.createPost(@post)

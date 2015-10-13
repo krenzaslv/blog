@@ -27,7 +27,7 @@ GET           /user                   controllers.web.UserController.get
 # Picture
 POST          /picture                controllers.admin.PictureController.save
 GET           /picture/:id            controllers.admin.PictureController.get(id: String)
-GET           /picture                controllers.admin.PictureController.getAllIDs
+GET           /picture                controllers.admin.PictureController.getAllPictureUrls
 
 # Authentification
 GET           /signOut                controllers.authentification.SignOut.signOut

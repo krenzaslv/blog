@@ -4,16 +4,17 @@ class GetPictureCtrl
 
   constructor: (@$log, @PictureService) ->
     @$log.debug "constructing PictureController"
-    @pictures = []
+    @pictureUrls = []
+    @getAllPictureUrls()
 
-  getAllPictures: () ->
+  getAllPictureUrls: () ->
     @$log.debug "getAllPictures()"
 
-    @PostService.listPictures()
+    @PictureService.listPictures()
     .then(
       (data) =>
         @$log.debug "Promise returned #{data.length} Pictures"
-        @pictures = data
+        @pictureUrls = data
     ,
       (error) =>
         @$log.error "Unable to get Pictures: #{error}"
@@ -22,7 +23,7 @@ class GetPictureCtrl
   getPicture: (id) ->
     @$log.debug "getPicture()"
 
-    @PostService.getPicture(id)
+    @PictureService.getPicture(id)
     .then(
       (data) =>
         @$log.debug "Promise returned #{data.length} Pictures"
