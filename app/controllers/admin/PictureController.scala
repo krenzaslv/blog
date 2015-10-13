@@ -1,23 +1,18 @@
 package controllers.admin
 
-
-import javax.inject.Inject
+import com.google.inject.Inject
 import com.sksamuel.scrimage.Image
-import db.picture.PictureDao
-import db.post.PostService
+import com.sksamuel.scrimage.nio.JpegWriter
 import play.api.libs.iteratee.Enumerator
-import scala.concurrent.Future
 import play.api.mvc.{Action, Controller}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.api.libs.json.{JsValue, Json, JsObject, JsString}
-import reactivemongo.api.gridfs.{DefaultFileToSave, ReadFile}
+import reactivemongo.api.gridfs.ReadFile
+import play.modules.reactivemongo.{ReactiveMongoApi, JSONFileToSave, MongoController, ReactiveMongoComponents}
+import play.api.libs.json.{Json, JsString, JsObject}
 import play.modules.reactivemongo.json._
-import reactivemongo.api.gridfs.Implicits._
-import play.modules.reactivemongo.{
-MongoController, ReactiveMongoApi, ReactiveMongoComponents
-}
+import play.api.libs.json.Json._
 
-class PictureController @Inject()(val reactiveMongoApi: ReactiveMongoApi, val postService: PostService) extends Controller with MongoController with ReactiveMongoComponents {
+class PictureController @Inject()(val reactiveMongoApi: ReactiveMongoApi) extends Controller with MongoController with ReactiveMongoComponents {
 
   import MongoController.readFileReads
 
@@ -25,24 +20,14 @@ class PictureController @Inject()(val reactiveMongoApi: ReactiveMongoApi, val po
   val fsParser = gridFSBodyParser(gridFS)
   type JSONReadFile = ReadFile[JSONSerializationPack.type, JsString]
 
-  def upload = Action.async(fsParser) { request =>
-    val futureFile: Future[ReadFile[JSONSerializationPack.type, JsValue]] = request.body.files.head.ref
-
-    futureFile.map { file =>
-      Created
-    }.recover {
-      case e: Throwable => InternalServerError(e.getMessage)
-    }
-  }
-
   def save = Action.async(parse.multipartFormData) { request =>
     request.body.file("file") match {
       case Some(photo) =>
-        val fileToSave = DefaultFileToSave(photo.filename, photo.contentType)
-        val resizedFile = Image.fromFile(photo.ref.file).resizeToWidth(120)
+        val resizedFile = Image.fromFile(photo.ref.file).cover(600, 400).forWriter(JpegWriter())
         val enumerator = Enumerator.fromStream(resizedFile.stream)
-        PictureDao.save(enumerator, fileToSave).map {
-          case file => Ok
+        val fileToSave = JSONFileToSave(photo.filename, photo.contentType)
+        gridFS.save(enumerator, fileToSave).map {
+          case file => Created(Json.obj("id" -> file.id))
 
         }.recover {
           case e => InternalServerError("Failed to upload picture")
@@ -51,12 +36,13 @@ class PictureController @Inject()(val reactiveMongoApi: ReactiveMongoApi, val po
   }
 
   def get(id: String) = Action.async { request =>
-    val file = gridFS.find[JsObject, JSONReadFile](Json.obj("_id" -> id))
-    request.getQueryString("inline") match {
-      case Some("true") =>
-        serve[JsString, JSONReadFile](gridFS)(file, CONTENT_DISPOSITION_INLINE)
+    val image = gridFS.find[JsObject, JSONReadFile](Json.obj("_id" -> id))
+    serve[JsString, JSONReadFile](gridFS)(image)
+  }
 
-      case _ => serve[JsString, JSONReadFile](gridFS)(file)
+  def getAllIDs = Action.async { request =>
+    gridFS.find[JsObject, JSONReadFile](Json.obj()).collect[List]().map { files =>
+      Ok(toJson(files.map(_.id)))
     }
   }
 }
