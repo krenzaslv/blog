@@ -39,7 +39,7 @@ angular
     templateUrl: 'views/post_create.html'
     controller: 'CreatepostCtrl'
     controllerAs: 'cpc'
-  .when '/Picture',
+  .when '/picture',
     templateUrl: 'views/picture.html'
     controller: 'PictureCtrl'
     controllerAs: 'Picture'
