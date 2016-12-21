@@ -1,0 +1,6 @@
+# User Admin
+GET           /admin                       controllers.Application.index
+GET           /admin/users            controllers.admin.UserAdminController.list
+GET           /admin/users/:id        controllers.admin.UserAdminController.get(id: String)
+DELETE        /admin/users/:id        controllers.admin.UserAdminController.delete(id: String)
+POST          /admin/users            controllers.admin.UserAdminController.update
