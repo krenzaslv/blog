@@ -1,7 +1,6 @@
 package web
 
 import controllers.{BaseController, Reads}
-import db.BaseService
-import play.api.libs.json.Format
+import db.{BaseModel, BaseRepository, BaseService}
 
-class BaseWebController[E : Format](service : BaseService[E]) extends BaseController[E](service) with Reads[E]
+class BaseWebController[E <: BaseModel] extends BaseController with BaseService[E] with BaseRepository[E] with Reads[E]

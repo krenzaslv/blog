@@ -1,6 +1,5 @@
 package web
 
-import com.google.inject.Inject
-import db.post.{Post, PostService}
+import db.model.Post
 
-class PostController @Inject()(postService: PostService) extends BaseWebController[Post](postService)
+object PostController extends BaseWebController[Post]
