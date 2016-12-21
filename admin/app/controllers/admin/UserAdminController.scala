@@ -1,6 +1,5 @@
 package controllers.admin
 
-import com.google.inject.Inject
-import db.user.{User, UserService}
+import db.model.User
 
-class UserAdminController @Inject()(userService: UserService) extends BaseAdminController[User](userService)
+object UserAdminController extends BaseAdminController[User]
