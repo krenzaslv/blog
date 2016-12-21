@@ -1,5 +1,8 @@
 package web
 
-import db.model.Post
+import com.google.inject.{Inject, Singleton}
+import core.{Reads, Writes}
+import post.{Post, PostService}
 
-object PostController extends BaseWebController[Post]
+@Singleton
+class PostController @Inject()(val service: PostService) extends BaseWebController[Post] with Reads[Post] with Writes[Post]

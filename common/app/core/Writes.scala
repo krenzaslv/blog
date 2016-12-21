@@ -1,15 +1,12 @@
-package controllers
+package core
 
-import db.{BaseModel, BaseService}
 import play.api.Logger
 import play.api.libs.json.{Format, Json}
 import play.api.mvc.Action
-
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
-trait Writes[T <: BaseModel] extends BaseController {
-  service: BaseService[T] =>
+trait Writes[T <: BaseModel] extends BaseController[T] {
 
   def create(implicit format: Format[T]) = Action.async(parse.json) { implicit request =>
     request.body.validate[T].map { entity =>

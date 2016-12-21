@@ -1,7 +1,7 @@
-package db.model
+package user
 
 import com.mohiva.play.silhouette.api.{Identity, LoginInfo}
-import db.BaseModel
+import core.BaseModel
 import reactivemongo.bson.BSONObjectID
 
 case class User( _id: BSONObjectID = BSONObjectID.generate,
@@ -13,6 +13,7 @@ case class User( _id: BSONObjectID = BSONObjectID.generate,
 object User {
 
   import play.api.libs.json._
+  import play.modules.reactivemongo.json._
 
   implicit val userFormat = Json.format[User]
 }

@@ -1,3 +1,3 @@
-package db
+package core
 
 trait BaseModel
