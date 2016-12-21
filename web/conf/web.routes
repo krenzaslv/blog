@@ -1,0 +1,5 @@
+# Routes
+# This file defines all application web.routes (Higher priority web.routes first)
+# ~~~~
+
+GET           /                       controllers.Application.index
