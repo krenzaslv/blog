@@ -1,5 +1,6 @@
 package db.post
 
+import db.BaseModel
 import reactivemongo.bson.BSONObjectID
 import play.modules.reactivemongo.json.BSONFormats._
 
@@ -11,7 +12,7 @@ case class Post(
                  title: String,
                  content: String,
                  tags: Option[List[String]]
-                 )
+                 ) extends BaseModel
 
 object Post {
 
