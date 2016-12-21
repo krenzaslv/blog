@@ -1,5 +1,8 @@
 package controllers.admin
 
-import db.model.User
+import com.google.inject.{Inject, Singleton}
+import core.{Reads, Writes}
+import user.{User, UserService}
 
-object UserAdminController extends BaseAdminController[User]
+@Singleton
+class UserAdminController @Inject()(val service: UserService) extends BaseAdminController[User] with Reads[User] with Writes[User]

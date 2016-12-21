@@ -8,7 +8,7 @@ import play.api.test.Helpers._
  */
 class IntegrationSpec extends PlaySpec with OneServerPerTest with OneBrowserPerTest with HtmlUnitFactory {
 
-  "Application" should {
+  "core.Application" should {
 
     "work from within a browser" in {
 

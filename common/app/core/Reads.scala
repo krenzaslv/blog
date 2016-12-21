@@ -1,25 +1,23 @@
-package controllers
+package core
 
-import db.{BaseModel, BaseService}
 import play.api.libs.json.{Format, Json}
 import play.api.mvc.Action
 import reactivemongo.bson.BSONObjectID
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
-trait Reads[T <: BaseModel] extends BaseController {
-  service: BaseService[T] =>
+trait Reads[T <: BaseModel] extends BaseController[T] {
 
   def list(implicit format: Format[T]) = Action.async {
-    service.findAll.flatMap { entityList =>
+    service.getAll.flatMap { entityList =>
       Future.successful(Ok(Json.toJson(entityList)))
     }
   }
 
   def get(id: String)(implicit format: Format[T]) = Action.async {
     BSONObjectID.parse(id).map { id =>
-      service.find(id).map(
+      service.get(id).map(
         _.fold(
           NotFound(s"Entity #$id not found")
         )(entity =>

@@ -1,6 +1,6 @@
-package db.model
+package post
 
-import db.BaseModel
+import core.BaseModel
 import play.modules.reactivemongo.json.BSONFormats._
 import reactivemongo.bson.BSONObjectID
 
@@ -18,6 +18,7 @@ object Post {
 
   import play.api.libs.functional.syntax._
   import play.api.libs.json._
+  import play.modules.reactivemongo.json._
 
   implicit val postFormat =
     ((__ \ "_id").formatNullable[BSONObjectID].inmap[BSONObjectID](_.getOrElse(BSONObjectID.generate), Some(_)) ~

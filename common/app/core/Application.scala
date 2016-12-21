@@ -1,4 +1,4 @@
-package controllers
+package core
 
 import play.api.mvc._
 
