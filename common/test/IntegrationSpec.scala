@@ -10,7 +10,7 @@ class IntegrationSpec extends PlaySpec with OneServerPerTest with OneBrowserPerT
 
   "core.Application" should {
 
-    "work from within a browser" in {
+    "work from within a browser" ignore {
 
       go to ("http://localhost:" + port)
 

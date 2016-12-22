@@ -13,7 +13,7 @@ case class User( _id: BSONObjectID = BSONObjectID.generate,
 object User {
 
   import play.api.libs.json._
-  import play.modules.reactivemongo.json._
+  import reactivemongo.play.json._
 
   implicit val userFormat = Json.format[User]
 }

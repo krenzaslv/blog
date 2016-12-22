@@ -22,7 +22,8 @@ object Common {
       "net.codingwell" %% "scala-guice" % "4.0.0",
       "com.sksamuel.scrimage" %% "scrimage-core" % "2.1.0",
 
-      "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
+      "org.mockito" % "mockito-core" % "2.3.11" % Test
       // specs2 % Test
     ),
     resolvers ++= Seq(

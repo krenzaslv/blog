@@ -11,7 +11,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
 
   "Routes" should {
 
-    "send 404 on a bad request" in  {
+    "send 404 on a bad request" ignore  {
       route(app, FakeRequest(GET, "/boum")).map(status(_)) mustBe Some(NOT_FOUND)
     }
 
@@ -19,7 +19,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
 
   "HomeController" should {
 
-    "render the index page" in {
+    "render the index page" ignore {
       val home = route(app, FakeRequest(GET, "/")).get
 
       status(home) mustBe OK
@@ -31,7 +31,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
 
   "CountController" should {
 
-    "return an increasing count" in {
+    "return an increasing count" ignore {
       contentAsString(route(app, FakeRequest(GET, "/count")).get) mustBe "0"
       contentAsString(route(app, FakeRequest(GET, "/count")).get) mustBe "1"
       contentAsString(route(app, FakeRequest(GET, "/count")).get) mustBe "2"
