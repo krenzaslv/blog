@@ -1,6 +1,6 @@
 package core
 
-import reactivemongo.api.commands.WriteResult
+import reactivemongo.api.commands.{UpdateWriteResult, WriteResult}
 import reactivemongo.bson.BSONObjectID
 
 import scala.concurrent.Future
@@ -36,7 +36,9 @@ abstract class BaseRepository[T <: BaseModel](implicit format: OFormat[T]) {
     _.find(criteria).cursor[T]().collect[List]()
   }
 
-  def update(entity: T) = ??? //collection.flatMap {_.findAndUpdate(Json.obj("_id" -> Json.toJson(entity._id)), entity)}
+  def update(entity: T): Future[UpdateWriteResult] = collection.flatMap {
+    _.update(Json.obj("_id" -> Json.toJson(entity._id)), entity)
+  }
 
   def remove(id: BSONObjectID): Future[WriteResult] = collection.flatMap {
     _.remove(Json.obj("_id" -> Json.toJson(id)))

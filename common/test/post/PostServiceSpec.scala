@@ -45,5 +45,13 @@ class PostServiceSpec extends WordSpec with MockitoSugar {
         verify(mockPostRepository, times(1)).find(id)
       }
     }
+
+    "call update" should{
+      postService.update(mockPost)
+
+      "execute update on PostRepository " in{
+        verify(mockPostRepository, times(1)).update(mockPost)
+      }
+    }
   }
 }

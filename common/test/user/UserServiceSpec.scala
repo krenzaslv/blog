@@ -46,6 +46,14 @@ class UserServiceSpec extends WordSpec with MockitoSugar {
         verify(mockUserRepository, times(1)).find(id)
       }
     }
+
+    "call update" should {
+      userService.update(mockUser)
+
+      "execute update on PostRepository " in {
+        verify(mockUserRepository, times(1)).update(mockUser)
+      }
+    }
   }
 }
 

@@ -1,16 +1,20 @@
 package testUtil
 
 import core.{BaseModel, BaseRepository}
-import org.scalatest.{BeforeAndAfter, BeforeAndAfterAll}
+import org.scalatest._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatestplus.play.{OneAppPerSuite, PlaySpec}
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-trait BaseRepositoryTest[M <: BaseModel, T <: BaseRepository[M]] extends PlaySpec with OneAppPerSuite with ScalaFutures with BeforeAndAfter {
+trait BaseRepositoryTest[M <: BaseModel, T <: BaseRepository[M]] extends PlaySpec with MustMatchers with ScalaFutures with BeforeAndAfter {
 
   implicit val defaultPatience = PatienceConfig(timeout = Span(2, Seconds), interval = Span(500, Millis))
+
+  val app: Application = new GuiceApplicationBuilder().build()
 
   val repo: T
 
@@ -25,5 +29,4 @@ trait BaseRepositoryTest[M <: BaseModel, T <: BaseRepository[M]] extends PlaySpe
       }
     }
   }
-
 }
