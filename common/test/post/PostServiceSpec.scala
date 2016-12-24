@@ -30,7 +30,7 @@ class PostServiceSpec extends WordSpec with MockitoSugar {
     }
 
     "called getAll()" should {
-      postService.getAll
+      postService.findAll
 
       "execute findAll on PostRepository" in {
         verify(mockPostRepository, times(1)).findAll
@@ -39,7 +39,7 @@ class PostServiceSpec extends WordSpec with MockitoSugar {
 
     "called get" should {
       val id = BSONObjectID.generate
-      postService.get(id)
+      postService.find(id)
 
       "execute find on PostRepository" in {
         verify(mockPostRepository, times(1)).find(id)

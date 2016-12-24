@@ -8,3 +8,5 @@ lazy val root = (project in file(".")).
   dependsOn(web, admin)
 
 Common.settings
+
+coverageExcludedPackages := """<empty>;router\\..*;Reverse.*;router.Routes.*;"""

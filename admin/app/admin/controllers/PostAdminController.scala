@@ -1,4 +1,4 @@
-package controllers.admin
+package admin.controllers
 
 import com.google.inject.{Inject, Singleton}
 import core.{Reads, Writes}

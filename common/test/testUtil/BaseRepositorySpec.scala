@@ -10,7 +10,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-trait BaseRepositoryTest[M <: BaseModel, T <: BaseRepository[M]] extends PlaySpec with MustMatchers with ScalaFutures with BeforeAndAfter {
+trait BaseRepositorySpec[M <: BaseModel, T <: BaseRepository[M]] extends PlaySpec with MustMatchers with ScalaFutures with BeforeAndAfter {
 
   implicit val defaultPatience = PatienceConfig(timeout = Span(2, Seconds), interval = Span(500, Millis))
 

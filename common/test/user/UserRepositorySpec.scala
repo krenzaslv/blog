@@ -3,11 +3,11 @@ package user
 import com.mohiva.play.silhouette.api.LoginInfo
 import org.scalatest.time.{Seconds, Span}
 import play.api.libs.json.Json
-import testUtil.{BaseRepositoryTest}
+import testUtil.{BaseRepositorySpec}
 
 import scala.concurrent.Await
 
-class UserRepositorySpec extends BaseRepositoryTest[User, UserRepository] {
+class UserRepositorySpec extends BaseRepositorySpec[User, UserRepository] {
 
   override val repo: UserRepository = app.injector.instanceOf[UserRepository]
 
@@ -40,6 +40,7 @@ class UserRepositorySpec extends BaseRepositoryTest[User, UserRepository] {
       "find a user by id" in {
         val addedUser = newUser
         val add = repo.add(addedUser)
+        Await.result(add, Span(1, Seconds))
 
         val user = repo.find(addedUser._id)
 
