@@ -23,8 +23,8 @@ object Common {
       "com.sksamuel.scrimage" %% "scrimage-core" % "2.1.0",
 
       "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
-      "org.mockito" % "mockito-core" % "2.3.11" % Test
-      // specs2 % Test
+      "org.mockito" % "mockito-core" % "2.3.11" % Test,
+      "com.whisk" %% "docker-testkit-scalatest" % "0.8.3" % Test
     ),
     resolvers ++= Seq(
       "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases",
