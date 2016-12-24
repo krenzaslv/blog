@@ -3,7 +3,7 @@ package core
 import play.api.Logger
 import play.api.libs.json.{Format, Json}
 import play.api.mvc.Action
-import scala.concurrent.ExecutionContext.Implicits.global
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import scala.concurrent.Future
 
 trait Writes[T <: BaseModel] extends BaseController[T] {

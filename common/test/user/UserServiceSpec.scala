@@ -4,6 +4,7 @@ import com.mohiva.play.silhouette.api.LoginInfo
 import org.mockito.Mockito.{times, verify}
 import org.scalatest.WordSpec
 import org.scalatest.mock.MockitoSugar
+import play.api.libs.json.Json
 import reactivemongo.bson.BSONObjectID
 
 class UserServiceSpec extends WordSpec with MockitoSugar {
@@ -31,7 +32,7 @@ class UserServiceSpec extends WordSpec with MockitoSugar {
     }
 
     "called getAll()" should {
-      userService.getAll
+      userService.findAll
 
       "execute findAll on UserRepository" in {
         verify(mockUserRepository, times(1)).findAll
@@ -40,18 +41,10 @@ class UserServiceSpec extends WordSpec with MockitoSugar {
 
     "called get" should {
       val id = BSONObjectID.generate
-      userService.get(id)
+      userService.find(id)
 
       "execute find on UserRepository" in {
         verify(mockUserRepository, times(1)).find(id)
-      }
-    }
-
-    "call update" should {
-      userService.update(mockUser)
-
-      "execute update on PostRepository " in {
-        verify(mockUserRepository, times(1)).update(mockUser)
       }
     }
   }

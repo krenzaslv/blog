@@ -3,12 +3,12 @@ package post
 import org.scalatest.time.{Seconds, Span}
 import play.api.libs.json.Json
 import reactivemongo.api.commands.LastError
-import testUtil.BaseRepositoryTest
+import testUtil.BaseRepositorySpec
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Await
 
-class PostRepositorySpec extends BaseRepositoryTest[Post, PostRepository] {
+class PostRepositorySpec extends BaseRepositorySpec[Post, PostRepository] {
 
   override val repo: PostRepository = app.injector.instanceOf[PostRepository]
 
@@ -41,6 +41,7 @@ class PostRepositorySpec extends BaseRepositoryTest[Post, PostRepository] {
       "find a post by id" in {
         val addedPost = newPost
         val add = repo.add(addedPost)
+        Await.result(add, Span(1, Seconds))
 
         val post = repo.find(addedPost._id)
 

@@ -1,4 +1,4 @@
-package web
+package web.controllers
 
 import com.google.inject.{Inject, Singleton}
 import core.{Reads, Writes}
