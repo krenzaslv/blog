@@ -7,9 +7,9 @@ class PostSpec extends WordSpec with Matchers {
 
   "A post class" when {
     "read from json" should {
-      "fail with no content" ignore {}
-      "fail with no title" ignore {}
-      "be parsed with optional headerimage, tags, images" ignore {}
+      "fail with no content" is (pending)
+      "fail with no title" is (pending)
+      "be parsed with optional headerimage, tags, images" is (pending)
     }
 
     "created" should {

@@ -9,10 +9,10 @@ class UserSpec extends WordSpec with Matchers {
 
   "A user" when {
     "read from json" should {
-      "fail with invalid email" ignore {}
-      "fail with first name over 20 characters" ignore {}
-      "fail with last name over 20 characters" ignore {}
-      "be parsed with optional last name, first name, email" ignore {}
+      "fail with invalid email" is (pending)
+      "fail with first name over 20 characters" is (pending)
+      "fail with last name over 20 characters" is (pending)
+      "be parsed with optional last name, first name, email" is (pending)
     }
 
     "created" should {

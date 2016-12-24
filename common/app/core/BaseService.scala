@@ -1,6 +1,6 @@
 package core
 
-import reactivemongo.api.commands.WriteResult
+import reactivemongo.api.commands.{UpdateWriteResult, WriteResult}
 import reactivemongo.bson.BSONObjectID
 
 import scala.concurrent.Future
@@ -16,4 +16,6 @@ trait BaseService[T <: BaseModel] {
   def getAll: Future[List[T]] = repository.findAll
 
   def delete(id: BSONObjectID): Future[WriteResult] = repository.remove(id)
+
+  def update(entity: T): Future[UpdateWriteResult] = repository.update(entity)
 }
