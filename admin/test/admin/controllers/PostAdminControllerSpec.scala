@@ -1,20 +1,16 @@
-package controllers
+package admin.controllers
 
-
-import admin.controllers.PostAdminController
 import org.mockito.Mockito
-import org.scalatest.mock.MockitoSugar
-import post.{Post, PostService}
-import testUtil.BaseControllerSpec
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfter
+import org.scalatest.mock.MockitoSugar
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.api.libs.json.Json
-import reactivemongo.api.commands.{DefaultWriteResult, WriteResult}
+import post.{Post, PostService}
 import reactivemongo.bson.BSONObjectID
+import testUtil.BaseControllerSpec
 
 import scala.concurrent.Future
 
