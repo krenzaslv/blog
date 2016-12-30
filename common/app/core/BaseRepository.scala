@@ -1,22 +1,24 @@
 package core
 
+import core.util.MongoDbHelpers
 import reactivemongo.api.commands.{UpdateWriteResult, WriteResult}
 import reactivemongo.bson.BSONObjectID
 
 import scala.concurrent.Future
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.modules.reactivemongo.ReactiveMongoApi
-
-//Don't change this. Fucking implicit conversions of Reactivemongo
 import play.api.libs.json._
+//Don't change this. Fucking implicit conversions of Reactivemongo
 import reactivemongo.play.json._, collection._
 import play.modules.reactivemongo._
+import collection.JSONBatchCommands.FindAndModifyCommand.FindAndModifyResult
 
 
-abstract class BaseRepository[T <: BaseModel](implicit format: OFormat[T]) {
+abstract class BaseRepository[T <: BaseModel](implicit format: OFormat[T]) extends MongoDbHelpers[T]{
 
   val collectionName: String
   val reactiveMongoApi: ReactiveMongoApi
+
 
   def collection: Future[JSONCollection] = reactiveMongoApi.database.map { db =>
     db.collection[JSONCollection](collectionName)
@@ -25,7 +27,7 @@ abstract class BaseRepository[T <: BaseModel](implicit format: OFormat[T]) {
   def add(entity: T): Future[WriteResult] = collection.flatMap(_.insert(entity))
 
   def find(id: BSONObjectID): Future[Option[T]] = collection.flatMap {
-    _.find(Json.obj("_id" -> Json.toJson(id))).one[T]
+    _.find(findByIdQuery(id)).one[T]
   }
 
   def findAll: Future[List[T]] = collection.flatMap {
@@ -36,11 +38,16 @@ abstract class BaseRepository[T <: BaseModel](implicit format: OFormat[T]) {
     _.find(criteria).cursor[T]().collect[List]()
   }
 
+  //TODO: return updated model
   def update(entity: T): Future[UpdateWriteResult] = collection.flatMap {
-    _.update(Json.obj("_id" -> Json.toJson(entity._id)), entity)
+    _.update(findByIdQuery(entity._id), entity)
+  }
+
+  def modify(id: BSONObjectID, updateModifier: JsObject): Future[UpdateWriteResult] = collection.flatMap { col =>
+    col.update(findByIdQuery(id), updateModifier)
   }
 
   def remove(id: BSONObjectID): Future[WriteResult] = collection.flatMap {
-    _.remove(Json.obj("_id" -> Json.toJson(id)))
+    _.remove(findByIdQuery(id))
   }
 }
