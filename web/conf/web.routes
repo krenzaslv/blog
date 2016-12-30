@@ -5,5 +5,5 @@
 GET        /                core.Application.index
 
 # Posts
-GET        /posts           web.PostController.list
-GET        /post/:id        web.PostController.get(id)
+GET        /posts           web.controllers.PostController.list
+GET        /post/:id        web.controllers.PostController.get(id)

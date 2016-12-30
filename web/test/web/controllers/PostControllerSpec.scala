@@ -1,17 +1,16 @@
-package controllers
+package web.controllers
 
-import org.mockito.{ArgumentCaptor, Mock, Mockito}
-import org.scalatest.mock.MockitoSugar
-import post.{Post, PostService}
-import testUtil.BaseControllerSpec
+import org.mockito.Mockito
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfter
+import org.scalatest.mock.MockitoSugar
+import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import post.{Post, PostService}
 import reactivemongo.bson.BSONObjectID
-import web.controllers.PostController
+import testUtil.BaseControllerSpec
 
 import scala.concurrent.Future
 
