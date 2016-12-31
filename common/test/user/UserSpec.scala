@@ -8,12 +8,6 @@ import reactivemongo.bson.BSONObjectID
 class UserSpec extends WordSpec with Matchers {
 
   "A user" when {
-    "read from json" should {
-      "fail with invalid email" is (pending)
-      "fail with first name over 20 characters" is (pending)
-      "fail with last name over 20 characters" is (pending)
-      "be parsed with optional last name, first name, email" is (pending)
-    }
 
     "created" should {
       "generate ID if not provided" in {
