@@ -6,11 +6,6 @@ import reactivemongo.bson.BSONObjectID
 class PostSpec extends WordSpec with Matchers {
 
   "A post class" when {
-    "read from json" should {
-      "fail with no content" is (pending)
-      "fail with no title" is (pending)
-      "be parsed with optional headerimage, tags, images" is (pending)
-    }
 
     "created" should {
       "generate ID if not provided" in {
