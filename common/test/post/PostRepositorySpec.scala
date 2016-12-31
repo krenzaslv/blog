@@ -22,7 +22,7 @@ class PostRepositorySpec extends BaseRepositorySpec[Post, PostRepository] {
         val add = repo.add(addedPost)
 
         whenReady(add) { result =>
-          result mustBe 'ok
+          result mustBe true
         }
       }
 
@@ -34,7 +34,7 @@ class PostRepositorySpec extends BaseRepositorySpec[Post, PostRepository] {
         val doubleAdd = repo.add(addedPost)
 
         whenReady(doubleAdd) { result =>
-          result must not be 'ok
+          result mustBe false
         }
       }
 
@@ -58,7 +58,7 @@ class PostRepositorySpec extends BaseRepositorySpec[Post, PostRepository] {
         val delete = repo.remove(post._id)
 
         whenReady(delete) {
-          _ mustBe 'ok
+          _ mustBe true
         }
       }
 

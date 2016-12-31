@@ -3,6 +3,7 @@ package menu
 import org.scalatest.time.{Seconds, Span}
 import play.api.libs.json.Json
 import reactivemongo.api.commands.GroupAggregation
+import reactivemongo.bson.BSONObjectID
 import reactivemongo.core.commands.AddToSet
 import testUtil.BaseRepositorySpec
 
@@ -12,7 +13,7 @@ class MenuRepositorySpec extends BaseRepositorySpec[Menu, MenuRepository] {
 
   override val repo: MenuRepository = app.injector.instanceOf[MenuRepository]
 
-  def newMenu = Menu(title = "title")
+  def newMenu = Menu(title = "title", pageId = BSONObjectID.generate())
 
   "A MenuRepository" should {
     "return successful" when {
@@ -20,7 +21,7 @@ class MenuRepositorySpec extends BaseRepositorySpec[Menu, MenuRepository] {
         val add = repo.add(newMenu)
 
         whenReady(add) { result =>
-          result mustBe 'ok
+          result mustBe true
         }
       }
 
@@ -33,7 +34,7 @@ class MenuRepositorySpec extends BaseRepositorySpec[Menu, MenuRepository] {
         val updatedMenu = menu.copy(children = List(child))
         val update = repo.update(menu)
         whenReady(update) { result =>
-          result mustBe 'ok
+          result mustBe true
         }
       }
     }

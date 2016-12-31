@@ -15,5 +15,5 @@ class MenuRepository @Inject()(val reactiveMongoApi: ReactiveMongoApi) extends B
 
   override val collectionName: String = "menu"
 
-  def addChildMenu(parentId: BSONObjectID, menu: Menu): Future[UpdateWriteResult] = modify(parentId, addToSetQuery("children", menu))
+  def addChildMenu(parentId: BSONObjectID, menu: Menu): Future[Boolean] = modify(parentId, addToSetQuery("children", menu))
 }

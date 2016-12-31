@@ -20,6 +20,7 @@ class PostControllerSpec extends BaseControllerSpec with MockitoSugar with Befor
   val controller = new PostController(mockService)
 
   before(Mockito.reset(mockService))
+  before(Mockito.reset(mockService))
 
   def newPost = Post(headerImageID = None, images = None, title = "title", content = "content", tags = None)
 

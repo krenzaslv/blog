@@ -21,7 +21,7 @@ class UserRepositorySpec extends BaseRepositorySpec[User, UserRepository] {
         val add = repo.add(addeUser)
 
         whenReady(add) { result =>
-          result mustBe 'ok
+          result mustBe true
         }
       }
 
@@ -33,7 +33,7 @@ class UserRepositorySpec extends BaseRepositorySpec[User, UserRepository] {
         val doubleAdd = repo.add(addedUser)
 
         whenReady(doubleAdd) { result =>
-          result must not be 'ok
+          result mustBe false
         }
       }
 
@@ -57,7 +57,7 @@ class UserRepositorySpec extends BaseRepositorySpec[User, UserRepository] {
         val delete = repo.remove(user._id)
 
         whenReady(delete) {
-          _ mustBe 'ok
+          _ mustBe true
         }
       }
 
