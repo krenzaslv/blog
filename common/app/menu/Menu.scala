@@ -8,7 +8,7 @@ case class Menu(
                  override val _id: BSONObjectID = BSONObjectID.generate,
                  title: String,
                  children: List[Menu] = List.empty,
-                 uri: String = "http://www.google.ch"
+                 pageId: BSONObjectID
                ) extends BaseModel
 
 object Menu {

@@ -24,7 +24,7 @@ abstract class BaseRepository[T <: BaseModel](implicit format: OFormat[T]) exten
     db.collection[JSONCollection](collectionName)
   }
 
-  def add(entity: T): Future[WriteResult] = collection.flatMap(_.insert(entity))
+  def add(entity: T): Future[Boolean] = collection.flatMap(_.insert(entity).map(_.ok))
 
   def find(id: BSONObjectID): Future[Option[T]] = collection.flatMap {
     _.find(findByIdQuery(id)).one[T]
@@ -39,15 +39,16 @@ abstract class BaseRepository[T <: BaseModel](implicit format: OFormat[T]) exten
   }
 
   //TODO: return updated model
-  def update(entity: T): Future[UpdateWriteResult] = collection.flatMap {
-    _.update(findByIdQuery(entity._id), entity)
+  def update(entity: T): Future[Boolean] = collection.flatMap {
+    _.update(findByIdQuery(entity._id), entity).map(_.ok)
   }
 
-  def modify(id: BSONObjectID, updateModifier: JsObject): Future[UpdateWriteResult] = collection.flatMap { col =>
-    col.update(findByIdQuery(id), updateModifier)
+  def modify(id: BSONObjectID, updateModifier: JsObject): Future[Boolean] = collection.flatMap { col =>
+    col.update(findByIdQuery(id), updateModifier).map(_.ok
+    )
   }
 
-  def remove(id: BSONObjectID): Future[WriteResult] = collection.flatMap {
-    _.remove(findByIdQuery(id))
+  def remove(id: BSONObjectID): Future[Boolean] = collection.flatMap {
+    _.remove(findByIdQuery(id)).map(_.ok)
   }
 }
